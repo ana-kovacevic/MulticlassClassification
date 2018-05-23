@@ -54,6 +54,8 @@ accTest = accuracy_score(y_test, predTest)
 
 print('Train Accuracy:', accTrain, '\nTest Accuracy:', accTest)
 
+#Visualize
+
 
 
 
