@@ -83,9 +83,13 @@ pd.crosstab(y_test, LR_predTest, rownames=['Actual Classes'], colnames=['Predict
 classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 42)
 classifier.fit(X_train, y_train)
 
+<<<<<<< HEAD
 # Predicting the Test set results
 RF_predTrain = classifier.predict(X_train)
 RF_predTest = classifier.predict(X_test)
+=======
+# Exploratory analysis
+>>>>>>> origin/master
 
 
 RF_accTrain = accuracy_score(y_train, RF_predTrain )
