@@ -31,18 +31,18 @@ data.describe()
 data['grp'].value_counts()
 data['grp'].value_counts().plot(kind='bar')
 
-
+data['grpOrig'] = data['grp']
 #Creating the dependent variable class
+
 factor = pd.factorize(data['grp'])
 data.grp = factor[0]
 definitions = factor[1]
 print(data.grp.head())
 print(definitions)
-
 # separate target and estimators
 data.shape
 y = data['grp']
-X = data.iloc[:,1:]
+X = data.iloc[:,1:31]
 
 # split the data
 X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.3, random_state=42)
@@ -72,10 +72,6 @@ LR_accTrain = accuracy_score(y_train, LR_predTrain)
 LR_accTest = accuracy_score(y_test, LR_predTest)
 print('LR Train Accuracy:', LR_accTrain, '\nLR Test Accuracy:', LR_accTest)
 
-reversefactor = dict(zip(range(3),definitions))
-y_test = np.vectorize(reversefactor.get)(y_test)
-LR_predTest = np.vectorize(reversefactor.get)(LR_predTest)
-pd.crosstab(y_test, LR_predTest, rownames=['Actual Classes'], colnames=['Predicted Classes'])
 
 ####################################### Learn Random forest
 
@@ -83,25 +79,19 @@ pd.crosstab(y_test, LR_predTest, rownames=['Actual Classes'], colnames=['Predict
 classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 42)
 classifier.fit(X_train, y_train)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Predicting the Test set results
 RF_predTrain = classifier.predict(X_train)
 RF_predTest = classifier.predict(X_test)
-=======
-# Exploratory analysis
->>>>>>> origin/master
-=======
-# Exploratory analysis
->>>>>>> origin/master
-
 
 RF_accTrain = accuracy_score(y_train, RF_predTrain )
 RF_accTest = accuracy_score(y_test, RF_predTest)
-print('RF Train Accuracy:', RF_accTrain, '\nLR Test Accuracy:', RF_accTest)
+print('RF Train Accuracy:', RF_accTrain, '\nRF Test Accuracy:', RF_accTest)
 
-
+######## confusion matrix
 reversefactor = dict(zip(range(3),definitions))
 y_test = np.vectorize(reversefactor.get)(y_test)
 RF_predTest = np.vectorize(reversefactor.get)(RF_predTest)
 pd.crosstab(y_test, RF_predTest, rownames=['Actual Classes'], colnames=['Predicted Classes'])
+
+LR_predTest = np.vectorize(reversefactor.get)(LR_predTest)
+pd.crosstab(y_test, LR_predTest, rownames=['Actual Classes'], colnames=['Predicted Classes'])
