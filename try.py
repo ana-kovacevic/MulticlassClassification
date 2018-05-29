@@ -5,6 +5,7 @@ Created on Mon May 28 13:59:28 2018
 @author: akovacevic
 """
 
+<<<<<<< HEAD
 #Importing Libraries
 import pandas as pd
 import numpy as np
@@ -16,10 +17,20 @@ from sklearn.externals import joblib
 from sklearn.metrics import roc_curve, auc
 from itertools import cycle
 from sklearn import svm
+=======
+import numpy as np
+import matplotlib.pyplot as plt
+from itertools import cycle
+
+from sklearn import svm, datasets
+from sklearn.metrics import roc_curve, auc
+from sklearn.model_selection import train_test_split
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 from sklearn.preprocessing import label_binarize
 from sklearn.multiclass import OneVsRestClassifier
 from scipy import interp
 
+<<<<<<< HEAD
 
 # Import some data to play with
 
@@ -50,18 +61,51 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3,random_st
 # Learn to predict each class against the other
 classifier = OneVsRestClassifier(svm.SVC(kernel='linear', probability=True,random_state=random_state))
 y_score = classifier.fit(X_train, y_train).decision_function(X_test)
+=======
+# Import some data to play with
+iris = datasets.load_iris()
+iX = iris.data
+iy = iris.target
+
+# Binarize the output
+iy = label_binarize(y, classes=[0, 1, 2])
+n_classes = iy.shape[1]
+
+# Add noisy features to make the problem harder
+random_state = np.random.RandomState(0)
+n_samples, n_features = iX.shape
+iX = np.c_[iX, random_state.randn(n_samples, 200 * n_features)]
+
+# shuffle and split training and test sets
+iX_train, iX_test, iy_train, iy_test = train_test_split(iX, iy, test_size=.5, random_state=0)
+
+# Learn to predict each class against the other
+classifier = OneVsRestClassifier(svm.SVC(kernel='linear', probability=True,
+                                 random_state=random_state))
+iy_score = classifier.fit(iX_train, iy_train).decision_function(iX_test)
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 
 # Compute ROC curve and ROC area for each class
 fpr = dict()
 tpr = dict()
 roc_auc = dict()
 for i in range(n_classes):
+<<<<<<< HEAD
     fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
     roc_auc[i] = auc(fpr[i], tpr[i])
 
 # Compute micro-average ROC curve and ROC area
 fpr["micro"], tpr["micro"], _ = roc_curve(y_test.ravel(), y_score.ravel())
 roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+=======
+    fpr[i], tpr[i], _ = roc_curve(iy_test[:, i], iy_score[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Compute micro-average ROC curve and ROC area
+fpr["micro"], tpr["micro"], _ = roc_curve(iy_test.ravel(), iy_score.ravel())
+roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 #Plot of a ROC curve for a specific class
 
 plt.figure()
@@ -78,6 +122,7 @@ plt.legend(loc="lower right")
 plt.show()
 
 
+<<<<<<< HEAD
 # Compute macro-average ROC curve and ROC area
 
 # First aggregate all false positive rates
@@ -126,6 +171,40 @@ plt.show()
 ###############################################################################
 ################## One Hot Encode with scikit-learn ###########################
 ###############################################################################
+=======
+fpr, tpr, thresholds = metrics.roc_curve(y, pred, pos_label=2)
+metrics.auc(fpr, tpr)
+###############################################
+# Cross Validation Classification ROC AUC
+import pandas as pd
+from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = pd.read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+seed = 7
+kfold = model_selection.KFold(n_splits=10, random_state=seed)
+model = LogisticRegression()
+model.fit(X, Y)
+pred = model.predict(X)
+scoring = 'roc_auc'
+results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+
+fpr, tpr, thresholds = metrics.roc_curve(Y, pred, pos_label=2)
+metrics.auc(fpr, tpr)
+
+print("AUC: %.3f (%.3f)") % (results.mean(), results.std())
+print("AUC: %.3f (%.3f)") #% (results.mean(), results.std())
+print(results.mean(), results.std())
+
+
+
+### One Hot Encode with scikit-learn
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 
 from numpy import argmax
 from sklearn.preprocessing import LabelEncoder
@@ -150,3 +229,8 @@ print(inverted)
 
 type(onehot_encoded)
 onehot_encoded[2]
+<<<<<<< HEAD
+=======
+
+################################################ Multi class
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
