@@ -16,11 +16,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 from sklearn.externals import joblib
 from sklearn.metrics import roc_curve, auc
+<<<<<<< HEAD
 from itertools import cycle
 from sklearn import svm, datasets
 from sklearn.preprocessing import label_binarize
 from sklearn.multiclass import OneVsRestClassifier
 from scipy import interp
+=======
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 
 
 np.set_printoptions(suppress=True)
@@ -129,6 +132,7 @@ def hot_encoded(multiClassVec):
 
 ###### ROC curve
 # Compute ROC curve and ROC area for each class
+<<<<<<< HEAD
 encodedLR_predTest = hot_encoded(LR_predTest)
 encodedLR_predTest = hot_encoded(LR_predTest)
 
@@ -167,6 +171,10 @@ plt.legend(loc="lower right")
 plt.show()
 
 
+=======
+encodedYtest = hot_encoded(y_test)
+encodedLR_predTest = hot_encoded(LR_predTest)
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 
 
 fpr = dict()
@@ -183,7 +191,11 @@ roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
 
 plt.figure()
 lw = 2
+<<<<<<< HEAD
 plt.plot(fpr[0], tpr[0], color='darkorange',
+=======
+plt.plot(fpr[2], tpr[2], color='darkorange',
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
          lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
 plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
 plt.xlim([0.0, 1.0])
@@ -194,6 +206,11 @@ plt.title('Receiver operating characteristic example')
 plt.legend(loc="lower right")
 plt.show()
 
+<<<<<<< HEAD
+=======
+from scipy import interp
+from itertools import cycle
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 # Compute macro-average ROC curve and ROC area
 
 # First aggregate all false positive rates
@@ -211,6 +228,7 @@ fpr["macro"] = all_fpr
 tpr["macro"] = mean_tpr
 roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
 
+<<<<<<< HEAD
 # Plot all ROC curves
 #plt.figure()
 #plt.plot(fpr["micro"], tpr["micro"],
@@ -222,6 +240,9 @@ roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
 #         label='macro-average ROC curve (area = {0:0.2f})'
 #               ''.format(roc_auc["macro"]),
 #         color='navy', linestyle=':', linewidth=4)
+=======
+
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
 
 colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
 for i, color in zip(range(3), colors):
@@ -236,4 +257,8 @@ plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Some extension of Receiver operating characteristic to multi-class')
 plt.legend(loc="lower right")
+<<<<<<< HEAD
 plt.show()
+=======
+plt.show()
+>>>>>>> 17ea94e295aeae66dd5af067e30da73e0d1d1570
